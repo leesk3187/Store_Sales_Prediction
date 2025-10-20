@@ -194,7 +194,7 @@ AI 모델은 문자열(`object`)을 처리할 수 없으므로, `sklearn.preproc
 
 종합적으로 모델은 판매량의 기본적인 패턴은 잘 학습했으나, 특정 메뉴(특히 설렁탕 계열)나 특정 상황(주말 피크, 이벤트 등)에서의 예측 정확도를 개선할 여지가 있다.
 
-# 6. 시각화 및 결과 공유
+<!-- # 6. 시각화 및 결과 공유
 
 본 프로젝트의 최종 분석 결과와 시각 자료는 별도의 보고서에 상세히 기술되어 있다. 보고서에는 다음과 같은 주요 시각화 자료가 포함되어 있있다.
 
@@ -202,52 +202,109 @@ AI 모델은 문자열(`object`)을 처리할 수 없으므로, `sklearn.preproc
     - 전체추세: 비교적 일정한 패턴을 보인다.
     - 계절성: 매년 여름 겨울에 약간의 변동성이 보인다.
     - 특이점: 2024, 2025년 초에 큰 피크가 보인다.(설 연휴 가능성)   
-![alt text](01_total_sales_trend.png)
+
+    ![alt text](01_total_sales_trend.png)
 
 2. **기온-판매량 관계**: 샘플링 데이터에서 x축은 평균 기온(`temp_avg`), y축은 판매량(`수량`) 산점도
     - 뚜렷한 선형 관계는 보이지 않는다.
     - 기온이 -10℃이하 25℃이상일 때 판매량이 0~50개 사이에 집중 되는 경향이 있고 0~20℃ 사이에서는 판매량 분포가 좀 더 넓게 퍼져 있다.
+    
     ![alt text](04_eda_temp_vs_quantity.png)
 
 3. 요일별 평균 판매량 (EDA)
     - 주말이 평일보다 판매량이 높다. 목요일은 가장 낮은 판매량을 보인다.
     - 요일별 패턴을 확인하고 `day_ofweek`나 `is_weekend` 피처를 만들었다.
-![alt text](05_eda_avg_sales_by_dow.png)
+
+    ![alt text](05_eda_avg_sales_by_dow.png)
 
 4. **실제값 vs. 예측값 비교:** 모델의 예측값과 실제 판매량 값을 비교(모델의 예측 정확도와 경향성(과소/과대 예측)을 확인).
     - 예측선이 실제선의 패턴을 잘 따라고 있다.
     - 지속적으로 과소 예측 경향이 보인다.
     - 모델 성능(RMSE, MAE)를 시각적으로 보완하고 모델의 예측 경향(과소적합)을 알 수 있다.
-![alt text](02_actual_vs_predicted.png)
 
-3. **피처 중요도:** LightGBM 모델이 학습 과정에서 어떤 피처를 중요하게 사용했는지 시각화하여 모델의 예측 근거를 해석한다.
-![alt text](03_feature_importance.png)
-3.1 날짜별 평균 오차 추이
-![alt text](06_error_trend_over_time.png)
-4. **오차 분석 시각화:** 예측 오차의 분포(히스토그램)나 시간에 따른 변화(시계열)를 시각화하여 모델의 약점을 분석한한다.
-![alt text](07_error_distribution.png)
+    ![alt text](02_actual_vs_predicted.png)
 
+5. **피처 중요도:** LightGBM 모델이 학습 과정에서 어떤 피처를 중요하게 사용했는지 모델의 예측 근거 해석.
+    - `메뉴코드`, `매장명`, `unit_price`, `홀배달여부`, `lag_7_days_qty` 순으로 중요하게 사용
+
+    ![alt text](03_feature_importance.png)
+
+6. **오차 분석 시각화:** 예측 오차의 분포(히스토그램)를 보고 모델의 약점을 분석한다.
+    - x축: 오차크기, y축: 오차 빈도수
+    - 0 근처에서 뾰족하고 양쪽 꼬리가 짧다.
+    - 대부분 예측을 정확하게 한다.
+    - 오른쪽으로 약간 치우쳐 있고 꼬리가 비교적 길게 뻗어 있어서 가끔 과소 예측 오차가 발생한다.
+
+    ![alt text](07_error_distribution.png) -->
+
+# 6. 시각화 및 결과 공유 (Visualization & Reporting)
+
+본 프로젝트의 최종 분석 결과와 주요 시각 자료는 별도의 보고서(`reports/final_report.html` 또는 `.pdf`)에 상세히 기술되어 있다. `reports/images/` 경로에는 분석 과정 및 결과 이해를 돕는 다음과 같은 그래프들이 저장되어 있다.
+
+1.  **`01_total_sales_trend.png` (전체 판매량 추이):** 분석 기간 동안의 일별 총 판매량 변화를 시각화하여 전반적인 트렌드, 계절성, 특이점(e.g., 명절 피크)을 파악한한다.
+    ![Total Sales Trend](reports/images/01_total_sales_trend.png)
+
+2.  **`04_eda_temp_vs_quantity.png` (기온-판매량 관계):** EDA 단계에서 기온과 판매량 간의 관계를 탐색한 산점도 예시다. (뚜렷한 선형 관계는 관찰되지 않음)
+    ![Temp vs Quantity EDA](reports/images/04_eda_temp_vs_quantity.png)
+
+3.  **`05_eda_avg_sales_by_dow.png` (요일별 평균 판매량):** 주말 판매량이 주중보다 높게 나타나는 명확한 요일별 패턴을 확인한다. 이는 `is_weekend` 피처 생성의 근거가 된다.
+    ![Avg Sales by Day of Week](reports/images/05_eda_avg_sales_by_dow.png)
+
+4.  **`02_actual_vs_predicted.png` (실제값 vs. 예측값):** 검증 기간 동안 모델 예측값과 실제 판매량을 비교한다. 모델이 전반적인 패턴은 잘 예측하나 **지속적인 과소 예측 경향**이 있음을 보여준다.
+    ![Actual vs Predicted](reports/images/02_actual_vs_predicted.png)
+
+5.  **`03_feature_importance.png` (피처 중요도):** LightGBM 모델이 예측 시 중요하게 사용한 상위 피처들을 보여준다. `메뉴코드`, `매장명`, `unit_price`, `홀배달여부`, `lag_7_days_qty` 순으로 높게 나타난다.
+    ![Feature Importance](reports/images/03_feature_importance.png)
+
+6.  **`07_error_distribution.png` (오차 분포):** 예측 오차의 분포를 히스토그램으로 시각화한다. 대부분의 예측 오차가 0에 가깝게 집중되어 있으나, 양수(+) 방향으로 긴 꼬리가 존재하여 **간헐적인 큰 과소 예측 오차** 발생 및 **전반적인 과소 예측 경향**을 나타낸다.
+    ![Error Distribution](reports/images/07_error_distribution.png)
+
+이 시각 자료들은 최종 보고서에서 모델 성능, 예측 경향성, 주요 영향 요인 등을 설명하는 데 활용된다.
 
 # 디렉토리 구조
-📁 내_분석_프로젝트/
+## 디렉토리 구조 (Directory Structure)
+
+📁 판매량_예측_프로젝트/
  │
  ├── 📁 data/
  │   ├── 📁 raw/
- │   │   └── sample_data_1016.csv       # 원본 데이터
- │   │   └── 매장지수.xlsx
- │   │   └── 상권권지수.xlsx
+ │   │   ├── 📁 population/
+ │   │   │   └── 서울시_상권분석서비스_*.csv  # 원본 인구 데이터
+ │   │   ├── 📁 weather/
+ │   │   │   ├── 📁 2025/
+ │   │   │   │   └── SURFACE_ASOS_108_MI_*.csv # 2025년 분 단위 날씨
+ │   │   │   └── SURFACE_ASOS_108_DAY_*.csv  # 2023-24년 일 단위 날씨
+ │   │   ├── sample_data_1016.csv           # 원본 판매 데이터
+ │   │   ├── 매장지수.xlsx                    # 원본 매장 지수
+ │   │   └── 상권지수.xlsx                    # 원본 상권 지수
+ │   │
  │   └── 📁 processed/
- │       └──       # 전처리 후 저장한 데이터
+ │       ├── final_integrated_dataset.csv     # 1차 통합 데이터셋
+ │       ├── holidays_20230101-20250930.csv  # 가공된 공휴일 데이터
+ │       ├── model_ready_dataset.csv        # 최종 모델 학습용 데이터셋
+ │       ├── population_samsung_quarterly.csv # 가공된 인구 데이터
+ │       └── weather_processed_20230101-20250930.csv # 가공된 날씨 데이터
  │
  ├── 📁 notebooks/
- │   └── main.ipynb # 분석/실험용 노트북 파일
+ │   ├── 01_preprocess_weather.ipynb          # 날씨 데이터 전처리
+ │   ├── 02_preprocess_population.ipynb       # 인구 데이터 전처리
+ │   ├── 03_preprocess_holidays.ipynb         # 공휴일 데이터 생성
+ │   ├── 04_data_integration.ipynb          # 모든 데이터 통합 및 클리닝
+ │   ├── 05_EDA_and_Feature_Engineering.ipynb # EDA 및 피처 엔지니어링
+ │   └── 06_Modeling.ipynb                    # 모델 학습 및 평가
  │
- ├── 📁 src/ (또는 scripts/)
- │   └── data_utils.py                 # 완성된 함수, 클래스 코드 (.py)
+ ├── 📁 src/                             
  │
- ├── 📁 reports/ (또는 output/)
- │   └── images/
- │   │   └── .png   # 분석 결과로 만든 시각화 자료
- │   └── .html     # 최종 보고서
+ ├── 📁 reports/                          *(최종 결과물)*
+ │   ├── 📁 images/
+ │   │   ├── 01_total_sales_trend.png       # 저장된 그래프
+ │   │   ├── 02_actual_vs_predicted.png
+ │   │   ├── 03_feature_importance.png
+ │   │   ├── 04_eda_temp_vs_quantity.png
+ │   │   ├── 05_eda_avg_sales_by_dow.png
+ │   │   ├── 06_error_trend_over_time.png
+ │   │   └── 07_error_distribution.png
+ │   └── final_report.html                  *(최종 보고서 파일)*
  │
- └── README.md                          # 프로젝트 설명서
+ └── README.md                            
+ 
