@@ -2,18 +2,11 @@
 data/raw/*
 data/processed/*
 
-# 만약 특정 파일만 무시하고 싶다면:
-# data/raw/sample_data_1016.csv
-# data/raw/매장지수.xlsx
-# data/raw/상권지수.xlsx
-# data/processed/final_integrated_dataset.csv
-# data/processed/model_ready_dataset.csv
+!data/raw/README.md
+!data/processed/README.md
 
 # 엑셀 파일 전체 무시
 *.xlsx
-
-# 대용량 CSV 파일 무시
-# *.csv
 
 # Jupyter Notebook 체크포인트 폴더 무시
 .ipynb_checkpoints/
