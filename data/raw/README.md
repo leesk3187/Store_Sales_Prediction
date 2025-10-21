@@ -11,8 +11,7 @@
 * 날씨 데이터 (기상청 CSV)
 * 인구 데이터 (서울 열린데이터 광장 CSV)
 
-각 데이터의 상세 출처 및 수집 방법은 메인 `README.md`의 [데이터 수집](#2-데이터-수집-및-탐색적-데이터-분석-eda) 섹션을 참조하세요.
-
+각 데이터의 상세 출처 및 수집 방법은 메인 `README.md`의 [데이터 수집](https://github.com/leesk3187/Store_Sales_Prediction/tree/main#2-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%88%98%EC%A7%91-%EB%B0%8F-%ED%83%90%EC%83%89%EC%A0%81-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B6%84%EC%84%9D-eda) 섹션을 참조하세요.
 
 
 **👈 원본 데이터 파일들이 위치하는 곳입니다.**
